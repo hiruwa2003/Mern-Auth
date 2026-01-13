@@ -1,0 +1,27 @@
+{
+  "name": "shop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon Api/index.js",
+    "start": "nodemon Api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiruwa2003/Mern-Auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiruwa2003/Mern-Auth/issues"
+  },
+  "homepage": "https://github.com/hiruwa2003/Mern-Auth#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "mongoose": "^9.1.3",
+    "nodemon": "^3.1.11"
+  }
+}
