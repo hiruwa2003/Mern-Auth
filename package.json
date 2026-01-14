@@ -20,6 +20,7 @@
   "homepage": "https://github.com/hiruwa2003/Mern-Auth#readme",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "mongoose": "^9.1.3",
     "nodemon": "^3.1.11"
