@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { SigninStart, SigninSuccess, SigninFailure } from '../../Redux/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Signin = () => {
   const [formData, setFormData] = useState({})
   const [errors, setErrors] = useState({})
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+ 
+  const dispatch = useDispatch()
+  const userState = useSelector((state) => state.user)
   const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
+  const { error: reduxError, loading: reduxLoading } = userState || {}
 
   const validateField = (name, value) => {
     if (name === 'email') {
@@ -43,22 +49,27 @@ const Signin = () => {
     if (!validateForm()) return
     try {
       setLoading(true)
+      dispatch(SigninStart());
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
       const data = await res.json()
-      setLoading(false)
       if (!res.ok) {
+        setLoading(false)
         setError(data?.message || 'Signin failed')
+        dispatch(SigninFailure(data))
       } else {
+        setLoading(false)
         setError(null)
+        dispatch(SigninSuccess(data))
         setSuccess(true)
         setTimeout(() => navigate('/'), 1500)
       }
     } catch (err) {
       setLoading(false)
+      dispatch(SigninFailure(err));
       setError('Signin failed')
       console.error(err)
     }
