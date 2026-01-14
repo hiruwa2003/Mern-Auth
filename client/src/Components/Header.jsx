@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <nav className="bg-state-200 shadow-md">
+    <nav className="bg-slate-900 shadow-md">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Main Row */}
@@ -17,7 +17,7 @@ const Header = () => {
               className="w-10 h-10 object-contain"
             />
             <Link to="/">
-              <span className="text-xl font-bold text-gray-800">
+              <span className="text-xl font-bold text-gray-200">
                 Mern Auth
               </span>
             </Link>
@@ -25,13 +25,13 @@ const Header = () => {
 
           {/* Center - Links */}
           <ul className="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
-            <Link to="/" className="text-gray-600 hover:text-blue-600 font-medium">
+            <Link to="/" className="text-gray-200 hover:text-blue-600 font-medium">
               Home
             </Link>
-            <Link to="/about" className="text-gray-600 hover:text-blue-600 font-medium">
+            <Link to="/about" className="text-gray-200 hover:text-blue-600 font-medium">
               About
             </Link>
-            <Link to="/contact" className="text-gray-600 hover:text-blue-600 font-medium">
+            <Link to="/contact" className="text-gray-200 hover:text-blue-600 font-medium">
               Contact
             </Link>
           </ul>
