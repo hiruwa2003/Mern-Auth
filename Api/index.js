@@ -1,13 +1,22 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import UserRouter from './Routes/userRoute.js';
 import AuthRouter from './Routes/authRoute.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(express.json());
 dotenv.config();
-
+app.use(cookieParser());
+// Enable CORS for the frontend (allow credentials for cookies)
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true,
+  })
+);
 // Allow opener checks from popups by setting COOP to same-origin-allow-popups
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');

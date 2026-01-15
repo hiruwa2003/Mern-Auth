@@ -60,8 +60,34 @@ const Profile = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log('Update profile:', { fullName, email, password, photo: preview });
-    // Dispatch update action here
+    (async () => {
+      try {
+        const payload = {
+          name: fullName,
+          email,
+          password,
+          photo: preview,
+        };
+
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${baseUrl}/api/user/update/${currentUser._id}`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Update failed');
+
+        setSuccessMsg('Profile updated successfully ✅');
+        setPassword('');
+        // TODO: update Redux store with returned user if desired
+      } catch (err) {
+        console.error('Update error:', err);
+        setSuccessMsg('Update failed: ' + (err.message || 'Unknown error'));
+      }
+    })();
   };
 
   return (

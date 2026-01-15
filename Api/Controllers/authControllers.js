@@ -7,8 +7,9 @@ export const signup = async (req, res, next) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = new User({ name, email, password: hashedPassword });
   try {
-    await newUser.save();
-    res.status(201).json({ message: "User signed up successfully" });
+    const savedUser = await newUser.save();
+    const { password: _pw, ...userData } = savedUser._doc;
+    res.status(201).json({ message: "User signed up successfully", user: userData });
     
   } catch (error) {
      next(error);
@@ -29,10 +30,11 @@ export const signin = async (req, res, next) => {
 
       return res.status(401).json({ message: "Invalid credentials" });
     }
+    const { password: _pw, ...userData } = user._doc;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
     res.cookie("token", token, { httpOnly: true , expires: expiryDate});
-    res.status(200).json({ message: "Signin successful", token });
+    res.status(200).json({ message: "Signin successful", token, user: userData });
   } catch (error) {
     next(error);
   }

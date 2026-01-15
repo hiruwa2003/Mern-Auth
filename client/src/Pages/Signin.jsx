@@ -70,7 +70,7 @@ const Signin = () => {
       } else {
         setLoading(false);
         setError(null);
-        dispatch(SigninSuccess(data));
+        dispatch(SigninSuccess(data.user));
         setSuccess(true);
         setTimeout(() => navigate("/"), 1500);
       }

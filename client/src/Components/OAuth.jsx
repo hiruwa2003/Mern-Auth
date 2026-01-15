@@ -63,7 +63,8 @@ const OAuth = () => {
             }),
           });
           const data = await res.json();
-          dispatch(SigninSuccess(data));
+          const userPayload = data.user || data;
+          dispatch(SigninSuccess(userPayload));
         }
       } catch (err) {
         // ignore if no redirect result or user cancelled
