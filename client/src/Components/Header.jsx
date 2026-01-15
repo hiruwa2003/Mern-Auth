@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <nav className="bg-slate-900 shadow-md">
       <div className="max-w-7xl mx-auto px-6">
-        
         {/* Main Row */}
         <div className="relative flex items-center h-16">
-
           {/* Left - Logo */}
           <div className="flex items-center space-x-3">
             <img
@@ -17,35 +17,48 @@ const Header = () => {
               className="w-10 h-10 object-contain"
             />
             <Link to="/">
-              <span className="text-xl font-bold text-gray-200">
-                Mern Auth
-              </span>
+              <span className="text-xl font-bold text-gray-200">Mern Auth</span>
             </Link>
           </div>
 
           {/* Center - Links */}
           <ul className="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
-            <Link to="/" className="text-gray-200 hover:text-blue-600 font-medium">
+            <Link
+              to="/"
+              className="text-gray-200 hover:text-blue-600 font-medium"
+            >
               Home
             </Link>
-            <Link to="/about" className="text-gray-200 hover:text-blue-600 font-medium">
+            <Link
+              to="/about"
+              className="text-gray-200 hover:text-blue-600 font-medium"
+            >
               About
             </Link>
-            <Link to="/contact" className="text-gray-200 hover:text-blue-600 font-medium">
+            <Link
+              to="/contact"
+              className="text-gray-200 hover:text-blue-600 font-medium"
+            >
               Contact
             </Link>
           </ul>
 
           {/* Right - SignUp Button */}
           <div className="ml-auto">
-            <Link
-              to="/signup"
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Sign Up
+            <Link to="/profile">
+              {currentUser ? (
+                <img
+                  src={currentUser.photo}
+                  alt="Profile"
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+              ) : (
+                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300">
+                  Sign In
+                </button>
+              )}
             </Link>
           </div>
-
         </div>
       </div>
     </nav>
