@@ -29,7 +29,9 @@ const OAuth = () => {
         }),
       });
       const data = await res.json();
-      dispatch(SigninSuccess(data));
+      // backend returns { token, user } — store only the user in Redux
+      const userPayload = data.user || data;
+      dispatch(SigninSuccess(userPayload));
       
     } catch (error) {
       console.error("Could not login with Google (popup); falling back to redirect:", error);
