@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { app } from '../firebase.jsx';
+import { Signout } from '../../Redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -13,6 +15,38 @@ const Profile = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   const fileRef = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/auth/signout', {
+        method: 'POST',
+      });
+      if (res.ok) {
+        dispatch(Signout());
+        navigate('/signin');
+      }
+    } catch (err) {
+      console.error('Error signing out:', err);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      try {
+        const res = await fetch('/api/auth/delete', {
+          method: 'DELETE',
+        });
+        if (res.ok) {
+          dispatch(Signout());
+          navigate('/signin');
+        }
+      } catch (err) {
+        console.error('Error deleting account:', err);
+      }
+    }
+  };
 
   if (!currentUser) {
     return (
@@ -167,8 +201,8 @@ const Profile = () => {
 
       {/* Delete Account / Sign Out */}
       <div className="flex flex-col items-center mt-6 gap-4">
-        <span className="text-red-600 cursor-pointer hover:underline">Delete Account</span>
-        <span className="text-gray-800 cursor-pointer hover:underline">Sign Out</span>
+        <span className="text-red-600 cursor-pointer hover:underline" onClick={handleDeleteAccount}>Delete Account</span>
+        <span className="text-gray-800 cursor-pointer hover:underline" onClick={handleSignOut}>Sign Out</span>
       </div>
     </div>
   );

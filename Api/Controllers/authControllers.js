@@ -66,4 +66,35 @@ export const google = async (req, res, next) => {
       } 
   } catch (error) {
        next(error);
-  }}
+  }
+}
+
+export const deleteAccount = async (req, res, next) => {
+  try {
+    // The user is already authenticated via verifyToken middleware
+    // req.user contains the authenticated user info
+    
+    // Find and delete the user by ID
+    const deletedUser = await User.findByIdAndDelete(req.user.id);
+    
+    if (!deletedUser) {
+      return next(errorHandler(404, "User not found"));
+    }
+    
+    // Clear the authentication cookie
+    res.clearCookie('token');
+    
+    res.status(200).json({ message: "User account deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const signout = async (req, res, next) => {
+  try {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'Sign out successful' });
+  } catch (error) {
+    next(error);
+  }
+}
