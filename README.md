@@ -1,4 +1,4 @@
-# 🌐 MERN Authentication System
+#  MERN Authentication System
 
 A full-stack authentication system built using **MongoDB, Express.js, React.js, and Node.js**.  
 This project includes user signup, login, Google authentication, profile update, and secure JWT-based authorization.
