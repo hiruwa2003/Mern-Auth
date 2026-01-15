@@ -8,6 +8,12 @@ const app = express();
 app.use(express.json());
 dotenv.config();
 
+// Allow opener checks from popups by setting COOP to same-origin-allow-popups
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  next();
+});
+
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log('Connected to MongoDB');
 }).catch((err) => {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import OAuth from "../Components/OAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -79,19 +80,29 @@ const Signup = () => {
       console.error("Error during signup:", err);
     }
   };
- 
+
   return success ? (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border text-center">
-        <h2 className="text-2xl font-bold text-green-600">User Account has been created successfully</h2>
-        <p className="mt-4 text-gray-700">You can now <Link to="/signin" className="text-indigo-600 font-medium">Sign In</Link>.</p>
+        <h2 className="text-2xl font-bold text-green-600">
+          User Account has been created successfully
+        </h2>
+        <p className="mt-4 text-gray-700">
+          You can now{" "}
+          <Link to="/signin" className="text-indigo-600 font-medium">
+            Sign In
+          </Link>
+          .
+        </p>
       </div>
     </div>
   ) : (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-transparent rounded-2xl shadow-xl p-8 border ">
         {/* Title */}
-        <h2 className="text-3xl font-bold text-center text-gray-800">Create Account</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800">
+          Create Account
+        </h2>
         <p className="text-center text-gray-500 mt-2">Sign up to get started</p>
 
         {/* Form */}
@@ -104,7 +115,9 @@ const Signup = () => {
             onChange={handleChange}
             aria-invalid={errors.name ? "true" : "false"}
           />
-          {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-red-600 text-sm mt-1">{errors.name}</p>
+          )}
 
           <input
             type="email"
@@ -114,7 +127,9 @@ const Signup = () => {
             onChange={handleChange}
             aria-invalid={errors.email ? "true" : "false"}
           />
-          {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+          )}
 
           <input
             type="password"
@@ -124,7 +139,9 @@ const Signup = () => {
             onChange={handleChange}
             aria-invalid={errors.password ? "true" : "false"}
           />
-          {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-600 text-sm mt-1">{errors.password}</p>
+          )}
 
           <button
             disabled={loading}
@@ -133,6 +150,7 @@ const Signup = () => {
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
+          <OAuth />
           {error && <p className="text-red-600 text-center mt-2">{error}</p>}
         </form>
 
@@ -143,22 +161,12 @@ const Signup = () => {
           <hr className="flex-1 border-gray-300" />
         </div>
 
-        {/* Social Login */}
-        <div className="flex gap-4">
-          <button className="flex-1 flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition">
-            <FaGoogle className="text-red-500" />
-            <span className="text-sm font-medium">Google</span>
-          </button>
-
-          <button className="flex-1 flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition">
-            <FaFacebookF className="text-blue-600" />
-            <span className="text-sm font-medium">Facebook</span>
-          </button>
-        </div>
-
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
-          Already have an account? <Link to="/signin" className="text-indigo-600 font-medium">Sign In</Link>
+          Already have an account?{" "}
+          <Link to="/signin" className="text-indigo-600 font-medium">
+            Sign In
+          </Link>
         </p>
       </div>
     </div>
